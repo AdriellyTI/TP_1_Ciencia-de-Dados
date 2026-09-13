@@ -1,0 +1,3 @@
+fonte_id,nome_fonte,metodo,url,data_hora_coleta,fuso_horario,endpoint_ou_seletor,parametros,arquivo_bruto,status_http,quantidade_registros,periodo_coberto,observacoes
+1,IBGE/SIDRA,API,[Preencher URL exata],[Preencher data e hora],[Preencher fuso],[Preencher endpoint],[Preencher parâmetros],[Preencher caminho do arquivo bruto],[Preencher status HTTP],[Preencher quantidade],[Preencher período],[Preencher observações]
+2,DIEESE,Web scraping de HTML,[Preencher URL exata],[Preencher data e hora],[Preencher fuso],[Preencher seletores ou tabela],[Preencher parâmetros se houver],[Preencher caminho do arquivo bruto],[Preencher status HTTP],[Preencher quantidade],[Preencher período],[Preencher observações]

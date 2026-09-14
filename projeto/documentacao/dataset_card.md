@@ -71,6 +71,36 @@ Web scraping de HTML.
 **Arquivo bruto correspondente:**  
 `[Preencher posteriormente com o caminho do arquivo em dados_brutos/]`
 
+### Fonte 3 — TSE/Dados Abertos (API)
+
+**Nome e URL:**  
+Portal de Dados Abertos do TSE — `https://dadosabertos.tse.jus.br/`  
+DivulgaCandContas REST — `https://divulgacandcontas.tse.jus.br/divulga/rest/v1`
+
+**Método de aquisição:**  
+API web (CKAN + REST).
+
+**Endpoint e parâmetros:**  
+- CKAN: `https://dadosabertos.tse.jus.br/api/3/action`  
+  - `package_search?q=candidatos` — busca datasets de candidatos  
+  - `package_show?id=candidatos-{ano}` — metadados e recursos (URLs de download)  
+  - `resource_show?id=<resource_id>` — detalhes de um recurso  
+- DivulgaCandContas REST: `https://divulgacandcontas.tse.jus.br/divulga/rest/v1`  
+  - `/eleicao/ordinarias` — lista eleições ordinárias  
+  - `/candidatura/listar/{ano}/{municipio_cod}/{eleicao_id}/{cargo_cod}/candidatos` — lista candidatos
+
+**Dados coletados:**  
+Dados de candidatos (nome, partido, cargo, UF) e resultados eleitorais para as eleições presidenciais e gubernatoriais de 1994 a 2022 (1994, 1998, 2002, 2006, 2010, 2014, 2018, 2022). Datasets `candidatos-{ano}` e `resultados-{ano}` no formato ZIP contendo arquivos CSV.
+
+**Licença ou termos de uso:**  
+Creative Commons Atribuição (CC-BY).
+
+**O uso pretendido é permitido?**  
+Sim. A licença CC-BY permite uso acadêmico desde que se atribua a fonte ao TSE. A API CKAN não exige autenticação.
+
+**Arquivo bruto correspondente:**  
+`dados_brutos/tse/` (arquivos ZIP baixados da CDN do TSE) e `dados_brutos/tse_ckan_api_resposta_YYYYMMDD_HHMMSS.json` (resposta bruta da API CKAN).
+
 ### Chave de integração
 
 **Chave ou conjunto de chaves:**  
@@ -81,6 +111,9 @@ Web scraping de HTML.
 
 **Campo correspondente na fonte DIEESE:**  
 `[Preencher posteriormente]`
+
+**Campo correspondente na fonte TSE/Dados Abertos:**  
+`ano` (ano eleitoral) e `sigla_partido` (partido do candidato/governador/presidente eleito)
 
 **Normalizações realizadas:**  
 `[Preencher posteriormente: acentos, maiúsculas, espaços, grafias, datas, códigos ou unidades]`
@@ -185,8 +218,9 @@ Preencher uma linha para cada variável da base tratada.
 | Artefato | Caminho | Status |
 |---|---|---|
 | Notebook de coleta | `../notebook_coleta.ipynb` | `[A preencher]` |
-| Dados brutos da API | `../dados_brutos/[arquivo]` | `[A preencher]` |
-| Dados brutos do scraping | `../dados_brutos/[arquivo]` | `[A preencher]` |
+| Dados brutos da API (IBGE/SIDRA) | `../dados_brutos/[arquivo]` | `[A preencher]` |
+| Dados brutos da API (TSE/Dados Abertos) | `../dados_brutos/tse/[arquivos ZIP CSV]` | `[A preencher]` |
+| Dados brutos do scraping (DIEESE) | `../dados_brutos/[arquivo]` | `[A preencher]` |
 | Base tratada | `../dados_tratados/[arquivo]` | `[A preencher]` |
 | Registro de proveniência | `proveniencia.csv` | `[A preencher]` |
 | Dataset card | `dataset_card.md` | `[A preencher]` |

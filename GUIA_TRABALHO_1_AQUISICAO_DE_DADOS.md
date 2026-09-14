@@ -26,6 +26,11 @@ A base deve ser criada pelo próprio grupo a partir de fontes reais, usando pelo
 1. **uma API web**; e
 2. **uma coleta direta de HTML, isto é, web scraping**.
 
+> **Nota:** O projeto deste grupo utiliza **três fontes** (duas APIs + um scraping), excedendo o mínimo exigido:
+> - Fonte 1 — IBGE/SIDRA (API)
+> - Fonte 2 — DIEESE (web scraping de HTML)
+> - Fonte 3 — TSE/Dados Abertos (API)
+
 Essas fontes precisam ser integradas em uma base única e coerente. Não basta entregar duas tabelas independentes.
 
 ---
@@ -36,9 +41,9 @@ O grupo deve:
 
 1. escolher um tema de interesse;
 2. formular uma pergunta que possa ser investigada com os dados;
-3. coletar dados de pelo menos duas fontes heterogêneas;
-4. garantir que uma fonte seja obtida por API;
-5. garantir que outra fonte seja obtida por scraping de HTML;
+3. coletar dados de pelo menos duas fontes heterogêneas;  <!-- Este projeto: 3 fontes -->
+4. garantir que uma fonte seja obtida por API;  <!-- IBGE/SIDRA e TSE -->
+5. garantir que outra fonte seja obtida por scraping de HTML;  <!-- DIEESE -->
 6. preservar os dados brutos exatamente como foram coletados;
 7. tratar, limpar e integrar os dados;
 8. registrar a proveniência de cada coleta;
@@ -157,7 +162,9 @@ A chave é o campo, ou conjunto de campos, usado para relacionar os registros. E
 - nome normalizado de uma cidade;
 - combinação de local e data;
 - código de categoria;
-- identificador de uma obra ou evento.
+- identificador de uma obra ou evento;
+- **ano eleitoral** (para integrar dados econômicos com resultados eleitorais);
+- **sigla do partido** (para mapear o espectro partidário dos governantes).
 
 Prefira códigos oficiais ou identificadores estáveis a nomes livres. Nomes podem conter diferenças de acentuação, abreviações, maiúsculas e grafias.
 
@@ -309,6 +316,14 @@ Um registro de proveniência pode ser uma tabela CSV, JSON ou Markdown com campo
 | `quantidade_registros` | Volume obtido |
 | `observacoes` | Erros, limitações e decisões |
 
+Exemplo de registro de proveniência para o projeto (três fontes):
+
+| fonte_id | nome | url | metodo | endpoint_ou_seletor |
+|---|---|---|---|---|
+| 1 | IBGE/SIDRA | `https://sidra.ibge.gov.br/Tabela/61` | API | `api/ipca?...` |
+| 2 | DIEESE | `https://www.dieese.org.br/analisecestabasica/` | Web scraping | Tabela HTML de cesta básica |
+| 3 | TSE/Dados Abertos | `https://dadosabertos.tse.jus.br/api/3/action` | API | `package_show?id=candidatos-{ano}` |
+
 O notebook também deve poder ser executado novamente por outra pessoa, considerando eventuais mudanças naturais nas fontes externas. Para isso, inclua dependências, parâmetros e instruções de execução.
 
 ---
@@ -376,12 +391,14 @@ O notebook é o principal registro executável do trabalho. Ele deve ser comenta
 2. pergunta motivadora;
 3. bibliotecas e dependências;
 4. configurações da coleta;
-5. aquisição da fonte via API;
-6. salvamento da resposta bruta da API;
-7. aquisição da fonte via HTML;
-8. salvamento do HTML ou arquivo bruto do scraping;
-9. leitura das fontes;
-10. inspeção inicial dos dados;
+5. aquisição da fonte via API;  <!-- Fonte 1: IBGE/SIDRA -->
+6. salvamento da resposta bruta da API;  <!-- Fonte 1: IBGE/SIDRA -->
+7. aquisição da segunda fonte via API;  <!-- Fonte 3: TSE/Dados Abertos -->
+8. salvamento da resposta bruta da segunda API;  <!-- Fonte 3: TSE -->
+9. aquisição da fonte via HTML;  <!-- Fonte 2: DIEESE -->
+10. salvamento do HTML ou arquivo bruto do scraping;  <!-- Fonte 2: DIEESE -->
+11. leitura das fontes;
+12. inspeção inicial dos dados;
 11. normalização das chaves;
 12. integração das fontes;
 13. tratamento e limpeza;
@@ -654,10 +671,10 @@ Nunca inclua tokens, senhas ou chaves privadas no pacote entregue.
 
 ## 20. Checklist final antes da entrega
 
-- [ ] O pacote contém pelo menos duas fontes realmente distintas.
-- [ ] Uma fonte foi obtida via API.
-- [ ] Uma fonte foi obtida via scraping de HTML.
-- [ ] As fontes estão integradas em uma base única.
+- [ ] O pacote contém pelo menos duas fontes realmente distintas.  <!-- Este projeto utiliza três fontes -->
+- [ ] Uma fonte foi obtida via API.  <!-- IBGE/SIDRA e TSE/Dados Abertos -->
+- [ ] Uma fonte foi obtida via scraping de HTML.  <!-- DIEESE -->
+- [ ] As fontes estão integradas em uma base única.  <!-- 3 fontes integradas por ano e sigla_partido -->
 - [ ] O join usa uma chave explicada e validada.
 - [ ] Os arquivos brutos estão presentes e intactos.
 - [ ] A base tratada está separada do bruto.

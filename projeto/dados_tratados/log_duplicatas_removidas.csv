@@ -1,0 +1,2 @@
+mes,data_referencia,capital,capital_bruto,sigla_uf,valor,motivo_remocao
+201905,2019-05-01,São Paulo,São Paulo,SP,507.07,"linha exatamente duplicada de outra do mesmo (capital, mes)"

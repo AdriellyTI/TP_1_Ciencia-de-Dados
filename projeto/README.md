@@ -16,10 +16,10 @@ Este repositório contém a coleta, integração e limpeza dos dados do **Trabal
 
 ## Integrantes
 
-- Nome 1
-- Nome 2
-- Nome 3
-- Nome 4
+- Alonso Ramos de Brito Neto - 22552380
+- Diego Gabriel Silva Azevedo - 22551909
+- Luiz Henrique Barbosa Costa - 22351234
+- Adrielly Silva de Souza - 22551157
 
 ## Estrutura das pastas
 

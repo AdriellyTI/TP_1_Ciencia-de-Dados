@@ -7,10 +7,11 @@
 
 **Grupo / integrantes:**
 
-- Nome 1
-- Nome 2
-- Nome 3
-- Nome 4
+- Alonso Ramos de Brito Neto 
+- Diego Gabriel Silva Azevedo 
+- Luiz Henrique Barbosa Costa 
+- Adrielly Silva de Souza
+
 
 **Tema:**  
 Análise da relação entre a variação dos preços da cesta básica, a inflação dos alimentos e os diferentes períodos de governos presidenciais e estaduais no Brasil desde 1994.

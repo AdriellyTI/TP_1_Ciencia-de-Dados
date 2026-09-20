@@ -1,0 +1,152 @@
+{
+  "help": "https://dadosabertos.tse.jus.br/api/3/action/help_show?name=package_show",
+  "success": true,
+  "result": {
+    "author": "",
+    "author_email": "",
+    "creator_user_id": "d53ef805-4d92-4e45-87e5-cc0f2d7caf98",
+    "id": "eec0dfc0-c6a4-463c-85f0-967c5a6e5bb1",
+    "isopen": true,
+    "license_id": "cc-by",
+    "license_title": "Creative Commons Attribution",
+    "license_url": "http://www.opendefinition.org/licenses/cc-by",
+    "maintainer": "",
+    "maintainer_email": "",
+    "metadata_created": "2021-08-23T22:11:16.815283",
+    "metadata_modified": "2026-04-06T17:14:55.531286",
+    "name": "candidatos-1994",
+    "notes": "Candidatos - Vagas                                                                                                                                                                     \r\n* * *\r\n\r\n__Estão incompletos os dados de candidatos das eleições de 1994, pois os mesmos não foram completamente centralizados nas bases no TSE.__                                                                                                                                                                \r\n\r\n* * *                 \r\n__ATENÇÃO!__\r\n\r\nUTILIZE SOFTWARE ADEQUADO PARA A COMPLETA VISUALIZAÇÃO DOS DADOS!\r\n\r\nArquivos de dados com um grande número de linhas (particularmente aqueles com extensão .csv e .txt) podem não ser visualizados em sua totalidade a depender do software utilizado. Por exemplo, o Microsoft Excel tem limitação de 1.048.576 linhas. Para evitar o carregamento incompleto do arquivo, utilize softwares com suporte para abrir grande volume de dados ou aplique técnicas específicas para seu processamento.\r\n\r\nConfira algumas alternativas a seguir:\r\n\r\n* Use ferramentas de análise estatística, de Business Intelligence (BI), de banco de dados ou de análise de dados; \r\n* Abra o arquivo no Excel usando a opção Obter Dados: utilize o Power Query para carregar o conjunto de dados completo e analisá-lo com tabelas dinâmicas; \r\n* Use programas de editores de texto com suporte para grandes volumes de dados;\r\n* Use qualquer outra ferramenta que suporte arquivos de grande volume de dados.",
+    "num_resources": 3,
+    "num_tags": 1,
+    "organization": {
+      "id": "b8a4fc19-1353-496e-a458-873aa1745b48",
+      "name": "tse-agel",
+      "title": "TSE/AGEL",
+      "type": "organization",
+      "description": "Assessoria de Gestão Eleitoral - AGEL",
+      "image_url": "",
+      "created": "2021-09-08T15:14:51.108227",
+      "is_organization": true,
+      "approval_status": "approved",
+      "state": "active"
+    },
+    "owner_org": "b8a4fc19-1353-496e-a458-873aa1745b48",
+    "private": false,
+    "state": "active",
+    "title": "Candidatos - 1994",
+    "type": "dataset",
+    "url": "Sistemas: CAND, Candex e DivulgaCand",
+    "version": "",
+    "extras": [
+      {
+        "key": "Contato para dúvidas/sugestões",
+        "value": "https://www.tse.jus.br/eleitor/servicos/ouvidoria/formulario-da-assessoria-de-informacao-ao-cidadao"
+      },
+      {
+        "key": "Escopo geopolítico",
+        "value": "Brasil"
+      },
+      {
+        "key": "Extração dos dados",
+        "value": "Data de geração disponível por arquivo"
+      },
+      {
+        "key": "Frequência de atualização",
+        "value": "Sob demanda/necessidade"
+      },
+      {
+        "key": "Área Gestora",
+        "value": "Assessoria de Gestão Eleitoral - AGEL"
+      }
+    ],
+    "groups": [
+      {
+        "description": "Nesta seção, constam arquivos com informações acerca do perfil dos candidatos, declarações de bens, fotos, dados sobre os partidos e as coligações, vagas por cargo e por unidade eleitoral, além dos sites e redes sociais dos candidatos e motivos de cassações ou indeferimento de registros de candidatura. \r\n\r\nEstão incompletos os dados de candidatos das eleições de 1994 a 1998, pois os mesmos não foram completamente centralizados nas bases no TSE. \r\n\r\nAtentamos que cada eleição possui um conjunto específico de regras que pode impactar na estrutura dos arquivos. Sendo assim, reforçamos a importância de consultar o arquivo de instruções “leia-me.pdf” contido na pasta compactada de cada um dos arquivos.",
+        "display_name": "Candidatos",
+        "id": "7b2cdb0e-7942-4cbe-90c7-b6aa01c0df55",
+        "image_display_url": "",
+        "name": "candidatos",
+        "title": "Candidatos"
+      }
+    ],
+    "resources": [
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-23T22:11:40.505466",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "506a5109-e7df-4dd3-86f9-2f28eed3710a",
+        "last_modified": null,
+        "metadata_modified": "2021-08-23T22:11:53.231952",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Candidatos",
+        "package_id": "eec0dfc0-c6a4-463c-85f0-967c5a6e5bb1",
+        "position": 0,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_1994.zip",
+        "url_type": null
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-23T22:11:53.242988",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "00e45e3e-4bea-4341-8ebb-59fdaf62e10b",
+        "last_modified": null,
+        "metadata_modified": "2026-04-06T17:14:55.537765",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Candidatos - Informações complementares",
+        "package_id": "eec0dfc0-c6a4-463c-85f0-967c5a6e5bb1",
+        "position": 1,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_cand_complementar/consulta_cand_complementar_1994.zip",
+        "url_type": null
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-23T22:12:04.840808",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "88294dbf-fb28-423a-a0a7-a5841af04599",
+        "last_modified": null,
+        "metadata_modified": "2021-08-23T22:12:05.021566",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Vagas",
+        "package_id": "eec0dfc0-c6a4-463c-85f0-967c5a6e5bb1",
+        "position": 2,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_vagas/consulta_vagas_1994.zip",
+        "url_type": null
+      }
+    ],
+    "tags": [
+      {
+        "display_name": "Ano 1994",
+        "id": "8cf5faac-c60d-408f-b736-bca9bcd3f388",
+        "name": "Ano 1994",
+        "state": "active",
+        "vocabulary_id": null
+      }
+    ],
+    "relationships_as_subject": [],
+    "relationships_as_object": []
+  }
+}

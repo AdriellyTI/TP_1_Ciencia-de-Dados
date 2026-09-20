@@ -1,0 +1,152 @@
+{
+  "help": "https://dadosabertos.tse.jus.br/api/3/action/help_show?name=package_show",
+  "success": true,
+  "result": {
+    "author": "",
+    "author_email": "",
+    "creator_user_id": "d53ef805-4d92-4e45-87e5-cc0f2d7caf98",
+    "id": "ab26799d-6163-4344-8e69-302e61c53849",
+    "isopen": true,
+    "license_id": "cc-by",
+    "license_title": "Creative Commons Attribution",
+    "license_url": "http://www.opendefinition.org/licenses/cc-by",
+    "maintainer": "",
+    "maintainer_email": "",
+    "metadata_created": "2021-08-26T16:15:48.384276",
+    "metadata_modified": "2026-04-22T21:50:35.940527",
+    "name": "resultados-1994",
+    "notes": "Detalhe da apuração - Votação nominal - Votação em partido - Votação por seção eleitoral                                                                                                                           \r\n                                                                                                                                                                                                                                                                                                                                                                                                                                                         \r\n* * *\r\n                                                                                                                                                                                                                                                                                                                                                                                                                                                          \r\n__Estão incompletos os dados de resultados das eleições de 1994, pois os mesmos não foram completamente centralizados nas bases no TSE.__\r\n\r\n__Os dados de resultados referentes ao pleito de 1994 foram substituídos por uma versão mais abrangente e completa, cuja fonte decorre da centralização das informações em projeto estruturante da Justiça Eleitoral, assegurando maior consistência e integridade dos dados disponibilizados.__\r\n\r\n__Destaca se, contudo, que, em razão dessa reestruturação, o nível de granularidade foi ajustado, passando os dados a serem disponibilizados em âmbito de município e zona eleitoral, não mais por seção eleitoral.__\r\n\r\n* * *\r\n__ATENÇÃO!__\r\n\r\nUTILIZE SOFTWARE ADEQUADO PARA A COMPLETA VISUALIZAÇÃO DOS DADOS!\r\n\r\nArquivos de dados com um grande número de linhas (particularmente aqueles com extensão .csv e .txt) podem não ser visualizados em sua totalidade a depender do software utilizado. Por exemplo, o Microsoft Excel tem limitação de 1.048.576 linhas. Para evitar o carregamento incompleto do arquivo, utilize softwares com suporte para abrir grande volume de dados ou aplique técnicas específicas para seu processamento.\r\n\r\nConfira algumas alternativas a seguir:\r\n\r\n* Use ferramentas de análise estatística, de Business Intelligence (BI), de banco de dados ou de análise de dados; \r\n* Abra o arquivo no Excel usando a opção Obter Dados: utilize o Power Query para carregar o conjunto de dados completo e analisá-lo com tabelas dinâmicas; \r\n* Use programas de editores de texto com suporte para grandes volumes de dados;\r\n* Use qualquer outra ferramenta que suporte arquivos de grande volume de dados.",
+    "num_resources": 3,
+    "num_tags": 1,
+    "organization": {
+      "id": "b8a4fc19-1353-496e-a458-873aa1745b48",
+      "name": "tse-agel",
+      "title": "TSE/AGEL",
+      "type": "organization",
+      "description": "Assessoria de Gestão Eleitoral - AGEL",
+      "image_url": "",
+      "created": "2021-09-08T15:14:51.108227",
+      "is_organization": true,
+      "approval_status": "approved",
+      "state": "active"
+    },
+    "owner_org": "b8a4fc19-1353-496e-a458-873aa1745b48",
+    "private": false,
+    "state": "active",
+    "title": "Resultados - 1994",
+    "type": "dataset",
+    "url": "Sistema SISTOT",
+    "version": "",
+    "extras": [
+      {
+        "key": "Contato para dúvidas/sugestões",
+        "value": "https://www.tse.jus.br/eleitor/servicos/ouvidoria/formulario-da-assessoria-de-informacao-ao-cidadao"
+      },
+      {
+        "key": "Escopo geopolítico",
+        "value": "Brasil"
+      },
+      {
+        "key": "Extração dos dados",
+        "value": "Data de geração disponível por arquivo"
+      },
+      {
+        "key": "Frequência de atualização",
+        "value": "Sob demanda/necessidade"
+      },
+      {
+        "key": "Área Gestora",
+        "value": "Assessoria de Gestão Eleitoral - AGEL"
+      }
+    ],
+    "groups": [
+      {
+        "description": "Neste grupo, constam os arquivos de resultados das eleições, boletins de urna e correspondências esperadas e efetivadas. Os arquivos estão divididos em duas categorias: resultados totalizados e boletins de urna. \r\n\r\nOs resultados totalizados são obtidos após o processamento pelo sistema de totalização. Nessa parte, teremos os arquivos de votação nominal e para partido/legenda por município e zona eleitoral. \r\n\r\nOs boletins de urna e arquivos de votação por seção eleitoral espelham os boletins impressos em cada uma das seções eleitorais. É importante ressaltar que, nesses arquivos, constam as informações da forma como saíram da urna eletrônica: sem o processamento do sistema de totalização. \r\n\r\nOs dados de resultados das eleições de 1994 a 1998 estão incompletos, pois não foram integralmente centralizados nas bases do TSE. No processo de revisão e saneamento dos dados referentes às eleições de 1994 e 1996, os arquivos de votação e apuração, no âmbito de município e zona eleitoral, foram substituídos por dados mais completos, provenientes das páginas de estatísticas das eleições anteriores. Para garantir a compatibilidade dessas informações, os dados de apuração e votação por seção eleitoral foram suprimidos da divulgação. Em caso de dúvidas, entre em contato com a Ouvidoria.\r\n\r\nAtentamos que cada eleição possui um conjunto específico de regras que pode impactar na estrutura dos arquivos. Sendo assim, reforçamos a importância de consultar o arquivo de instruções “leia-me.pdf” contido na pasta compactada de cada um dos arquivos. ",
+        "display_name": "Resultados",
+        "id": "9da26b47-2425-4958-9473-9df72e107cdd",
+        "image_display_url": "",
+        "name": "resultados",
+        "title": "Resultados"
+      }
+    ],
+    "resources": [
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-26T16:16:28.877992",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "611566ef-627a-447b-80af-367c4adb3bfd",
+        "last_modified": null,
+        "metadata_modified": "2021-08-26T16:17:12.280766",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Votação nominal por município e zona",
+        "package_id": "ab26799d-6163-4344-8e69-302e61c53849",
+        "position": 0,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_1994.zip",
+        "url_type": null
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-26T16:17:12.290887",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "c76ba7eb-71e9-42d6-b3de-388030eb0d94",
+        "last_modified": null,
+        "metadata_modified": "2021-08-26T16:24:43.747652",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Votação em partido por município e zona",
+        "package_id": "ab26799d-6163-4344-8e69-302e61c53849",
+        "position": 1,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_partido_munzona/votacao_partido_munzona_1994.zip",
+        "url_type": null
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2021-08-26T16:24:43.758041",
+        "datastore_active": false,
+        "description": "Todas as UFs",
+        "format": "CSV",
+        "hash": "",
+        "id": "4934661e-a0ac-477c-b549-37f6420f7dc4",
+        "last_modified": null,
+        "metadata_modified": "2021-08-26T16:25:33.048900",
+        "mimetype": "application/zip",
+        "mimetype_inner": null,
+        "name": "Detalhe da apuração por município e zona",
+        "package_id": "ab26799d-6163-4344-8e69-302e61c53849",
+        "position": 2,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_1994.zip",
+        "url_type": null
+      }
+    ],
+    "tags": [
+      {
+        "display_name": "Ano 1994",
+        "id": "8cf5faac-c60d-408f-b736-bca9bcd3f388",
+        "name": "Ano 1994",
+        "state": "active",
+        "vocabulary_id": null
+      }
+    ],
+    "relationships_as_subject": [],
+    "relationships_as_object": []
+  }
+}

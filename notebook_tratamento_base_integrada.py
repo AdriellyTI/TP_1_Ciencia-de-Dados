@@ -16,7 +16,7 @@
 #      `flag_conflito_capital_mes`).
 # 2. **Acomoda o IPCA tratado** (produzido por `notebook_ipca_alimentacao_1994_2026.py`)
 #    em `projeto/dados_tratados/`.
-# 3. **Integra as duas fontes** pela chave `mes` (AAAAAM), gerando `base_integrada`.
+# 3. **Integra as três fontes**: DIEESE × IPCA por `mes` e TSE por ano eleitoral/UF.
 #
 # > Todas as saídas vão para `projeto/dados_tratados/` (separados do bruto),
 # > em CSV **e** Parquet.
@@ -31,9 +31,14 @@ import pandas as pd
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-DIEESE_BRUTO = BASE_DIR / "Dados do DIEESE" / "dados_Coletados.csv"
 BRUTOS_DIR = BASE_DIR / "projeto" / "dados_brutos"
 TRATADOS_DIR = BASE_DIR / "projeto" / "dados_tratados"
+FONTES_DIEESE = [
+    BASE_DIR / "Dados do DIEESE" / "dados_Coletados.csv",
+    TRATADOS_DIR / "dieese_dados_tratados.csv",
+]
+DIEESE_BRUTO = next((caminho for caminho in FONTES_DIEESE if caminho.exists()), FONTES_DIEESE[0])
+TSE_DERIVADA = TRATADOS_DIR / "tse_derivada_presidentes_governadores.csv"
 TRATADOS_DIR.mkdir(parents=True, exist_ok=True)
 
 pd.set_option("display.max_columns", None)
@@ -332,13 +337,98 @@ base_integrada.to_csv(arquivo_integrada_csv, index=False, encoding="utf-8")
 base_integrada.to_parquet(arquivo_integrada_parquet, index=False)
 print("Integrada ->", arquivo_integrada_csv)
 
+# %% [markdown]
+# ## 8. Integração do TSE por período de governo
+#
+# A tabela econômica é mensal, enquanto o TSE é eleitoral. Para manter uma
+# linha por capital/mês, cada observação recebe o ano eleitoral mais recente
+# até o ano da observação. Governadores são associados por UF e presidentes por
+# ano eleitoral. Registros duplicados ou múltiplos do TSE são concatenados,
+# preservando a informação sem multiplicar linhas da base econômica.
+
+# %%
+# ---------------------------------------------------------------------------
+# 8. Integração TSE: governo de referência por ano e UF
+# ---------------------------------------------------------------------------
+assert TSE_DERIVADA.exists(), f"Tabela derivada do TSE não encontrada: {TSE_DERIVADA}"
+tse = pd.read_csv(TSE_DERIVADA, encoding="utf-8-sig")
+tse["ANO_ELEICAO"] = pd.to_numeric(tse["ANO_ELEICAO"], errors="coerce").astype("Int64")
+tse["CD_CARGO"] = pd.to_numeric(tse["CD_CARGO"], errors="coerce").astype("Int64")
+tse = tse[tse["CD_SIT_TOT_TURNO"].astype(str).eq("1")].copy()
+
+anos_eleitorais = sorted(tse["ANO_ELEICAO"].dropna().astype(int).unique())
+anos_presidenciais = sorted(tse.loc[tse["CD_CARGO"].eq(1), "ANO_ELEICAO"].dropna().astype(int).unique())
+anos_governadores = sorted(tse.loc[tse["CD_CARGO"].eq(3), "ANO_ELEICAO"].dropna().astype(int).unique())
+
+
+def ano_eleitoral_referencia(ano: int, anos_disponiveis: list[int]):
+    return max((eleicao for eleicao in anos_disponiveis if eleicao <= ano), default=pd.NA)
+
+
+base_integrada["ano_eleitoral_referencia"] = base_integrada["ano"].map(
+    lambda ano: ano_eleitoral_referencia(ano, anos_eleitorais)
+).astype("Int64")
+base_integrada["ano_eleitoral_presidente_referencia"] = base_integrada["ano"].map(
+    lambda ano: ano_eleitoral_referencia(ano, anos_presidenciais)
+).astype("Int64")
+base_integrada["ano_eleitoral_governador_referencia"] = base_integrada["ano"].map(
+    lambda ano: ano_eleitoral_referencia(ano, anos_governadores)
+).astype("Int64")
+
+
+def valores_unicos(series: pd.Series) -> str:
+    valores = sorted({str(valor).strip() for valor in series.dropna() if str(valor).strip()})
+    return " | ".join(valores)
+
+
+def resumo_tse(frame: pd.DataFrame, chaves: list[str], prefixo: str) -> pd.DataFrame:
+    colunas = ["NM_CANDIDATO", "SG_PARTIDO", "NM_PARTIDO", "NM_COLIGACAO"]
+    disponiveis = [coluna for coluna in colunas if coluna in frame.columns]
+    resumo = frame.groupby(chaves, as_index=False, dropna=False)[disponiveis].agg(valores_unicos)
+    return resumo.rename(columns={coluna: f"{prefixo}_{coluna.lower()}" for coluna in disponiveis})
+
+
+tse_presidentes = tse[tse["CD_CARGO"].eq(1)].copy()
+tse_governadores = tse[tse["CD_CARGO"].eq(3) & tse["SG_UF"].ne("BR")].copy()
+
+presidentes = resumo_tse(tse_presidentes, ["ANO_ELEICAO"], "tse_presidente")
+governadores = resumo_tse(tse_governadores, ["ANO_ELEICAO", "SG_UF"], "tse_governador")
+
+base_integrada = base_integrada.merge(
+    presidentes,
+    left_on="ano_eleitoral_presidente_referencia",
+    right_on="ANO_ELEICAO",
+    how="left",
+    validate="many_to_one",
+).drop(columns=["ANO_ELEICAO"])
+base_integrada = base_integrada.merge(
+    governadores,
+    left_on=["ano_eleitoral_governador_referencia", "sigla_uf"],
+    right_on=["ANO_ELEICAO", "SG_UF"],
+    how="left",
+    validate="many_to_one",
+).drop(columns=["ANO_ELEICAO", "SG_UF"])
+
+print("TSE derivado:", tse.shape, "| presidentes:", presidentes.shape, "| governadores:", governadores.shape)
+print("Linhas sem presidente de referência:", int(base_integrada["tse_presidente_nm_candidato"].isna().sum()))
+print("Linhas sem governador de referência:", int(base_integrada["tse_governador_nm_candidato"].isna().sum()))
+
 print("\nAmostra da base integrada:")
 print(base_integrada[["mes", "capital", "sigla_uf", "valor", "var_mensal",
-                      "tempo_em_horas", "ipca_var_mensal_pct", "ipca_tabela_sidra"]]
+                      "tempo_em_horas", "ipca_var_mensal_pct", "ipca_tabela_sidra",
+                      "ano_eleitoral_presidente_referencia",
+                      "ano_eleitoral_governador_referencia", "tse_presidente_sg_partido",
+                      "tse_governador_sg_partido"]]
       .tail(8).to_string(index=False))
 
+arquivo_integrada_csv = TRATADOS_DIR / "base_integrada.csv"
+arquivo_integrada_parquet = TRATADOS_DIR / "base_integrada.parquet"
+base_integrada.to_csv(arquivo_integrada_csv, index=False, encoding="utf-8")
+base_integrada.to_parquet(arquivo_integrada_parquet, index=False)
+print("Integrada com TSE ->", arquivo_integrada_csv)
+
 # %% [markdown]
-# ## 8. Observações finais
+# ## 9. Observações finais
 #
 # - **Unidade de observação:** capital × mês (DIEESE), com a variação mensal do IPCA
 #   (grupo Alimentação e bebidas) agregada por mês.

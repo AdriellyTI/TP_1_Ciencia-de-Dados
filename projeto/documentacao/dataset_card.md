@@ -21,7 +21,7 @@ Análise da relação entre a variação dos preços da cesta básica, a inflaç
 **Data ou período da coleta:**  
 - IBGE/SIDRA (IPCA): **14/09/2026, ~19:00–19:01 (UTC)** — registrado em `proveniencia_sidra_ipca_20260914_190056.csv` (e `.csv` 190130, execução duplicada).
 - DIEESE (cesta básica): **18/09/2026, 05:11–05:23 (America/Sao_Paulo)** — última execução registrada em `dados_brutos/dieese/provenance_log.csv` (o log cobre também execuções anteriores do mesmo fluxo).
-- TSE/Dados Abertos: a registrar pelo grupo (fonte testada, ainda sem arquivos no pacote).
+- TSE/Dados Abertos: coleta concluída em 19/09/2026, com dados brutos preservados e tabela derivada para análise.
 
 ---
 
@@ -75,33 +75,37 @@ Sim, para fins acadêmicos, com atribuição ao DIEESE; o acesso às páginas é
 
 ### Fonte 3 — TSE/Dados Abertos (API)
 
+> **Minimização de dados:** A coleta original totalizou ~6.38 GB (272 arquivos). Para a análise final, foram utilizados apenas dados de candidatos eleitos (presidentes e governadores), extraídos via API CKAN. Dados pessoais (CPF, nascimento, título eleitoral, etc.), votação detalhada por seção, notas fiscais e outros dados operacionais foram descartados. A base derivada contém apenas as variáveis necessárias para contextualizar períodos de governo e espectros partidários.
+
 **Nome e URL:**  
 Portal de Dados Abertos do TSE — `https://dadosabertos.tse.jus.br/`  
 DivulgaCandContas REST — `https://divulgacandcontas.tse.jus.br/divulga/rest/v1`
 
 **Método de aquisição:**  
-API web (CKAN + REST).
+API web (CKAN + REST) com download direto de recursos via CDN.
 
 **Endpoint e parâmetros:**  
-- CKAN: `https://dadosabertos.tse.jus.br/api/3/action`  
-  - `package_search?q=candidatos` — busca datasets de candidatos  
-  - `package_show?id=candidatos-{ano}` — metadados e recursos (URLs de download)  
-  - `resource_show?id=<resource_id>` — detalhes de um recurso  
-- DivulgaCandContas REST: `https://divulgacandcontas.tse.jus.br/divulga/rest/v1`  
-  - `/eleicao/ordinarias` — lista eleições ordinárias  
-  - `/candidatura/listar/{ano}/{municipio_cod}/{eleicao_id}/{cargo_cod}/candidatos` — lista candidatos
+- CKAN: `https://dadosabertos.tse.jus.br/api/3/action`
+  - `package_search?q=candidatos` — busca datasets de candidatos
+  - `package_show?id=candidatos-{ano}` — metadados e recursos (URLs de download)
+  - `package_show?id=resultados-{ano}` — metadados e recursos de resultados
+- DivulgaCandContas REST: `https://divulgacandcontas.tse.jus.br/divulga/rest/v1`
+  - `/eleicao/ordinarias` — lista eleições ordinárias (13 eleições)
 
 **Dados coletados:**  
-Dados de candidatos (nome, partido, cargo, UF) e resultados eleitorais para as eleições presidenciais e gubernatoriais de 1994 a 2022 (1994, 1998, 2002, 2006, 2010, 2014, 2018, 2022). Datasets `candidatos-{ano}` e `resultados-{ano}` no formato ZIP contendo arquivos CSV.
+16 datasets CKAN (candidatos-{ano} e resultados-{ano} para 1994-2022), 272 arquivos baixados (~6.38 GB). Licença CC-BY. Arquivos em ZIP contendo CSVs baixados via CDN `cdn.tse.jus.br`. Respostas brutas da API CKAN salvas em `ckan_{dataset}_raw_*.json` (16 arquivos). Lista de eleições salva via DivulgaCandContas REST.
 
 **Licença ou termos de uso:**  
 Creative Commons Atribuição (CC-BY).
 
 **O uso pretendido é permitido?**  
-Sim. A licença CC-BY permite uso acadêmico desde que se atribua a fonte ao TSE. A API CKAN não exige autenticação.
+Sim. A licença CC-BY permite uso acadêmico desde que se atribua a fonte ao TSE. A API CKAN e DivulgaCandContas não exigem autenticação.
+
+**Observações técnicas:**  
+O endpoint CKAN (`dadosabertos.tse.jus.br`) é protegido por CDN Akamai com proteção anti-bot que retorna HTTP 403 intermitentemente. Contornado via sessão HTTP com cookies do site principal. A API DivulgaCandContas funciona sem restrições. Arquivos baixados via CDN `cdn.tse.jus.br`.
 
 **Arquivo bruto correspondente:**  
-`dados_brutos/tse/` (arquivos ZIP baixados da CDN do TSE) e `dados_brutos/tse_ckan_api_resposta_YYYYMMDD_HHMMSS.json` (resposta bruta da API CKAN). *Estes arquivos ainda não estão presentes neste pacote.*
+`projeto/dados_brutos/tse/` (255 arquivos ZIP, aproximadamente 6,38 GB, respostas da API CKAN e lista de eleições), com proveniência detalhada em `projeto/dados_brutos/proveniencia/proveniencia_tse.csv`. A tabela derivada está em `projeto/dados_tratados/tse_derivada_presidentes_governadores.csv` e `.parquet`.
 
 ### Chave de integração
 
@@ -115,7 +119,7 @@ Sim. A licença CC-BY permite uso acadêmico desde que se atribua a fonte ao TSE
 `aammes` (6 dígitos) do boletim, convertido para `mes` (ex.: `200501`).
 
 **Campo correspondente na fonte TSE/Dados Abertos:**  
-`ano` (ano eleitoral) e `sigla_partido` (partido do candidato/governador/presidente eleito). **A fonte TSE não entra nesta base integrada** — a integração por `ano`/`sigla_partido` será feita na etapa de análise.
+`ANO_ELEICAO`, `SG_UF`, `CD_CARGO` e `SG_PARTIDO`. A base econômica recebe o ano eleitoral mais recente disponível até cada ano observado; presidentes são associados por ano eleitoral e governadores por ano eleitoral + UF.
 
 **Normalizações realizadas:**  
 - Grafias dos nomes das capitais: 61 grafias distintas (variações de maiúsculas, acentos, "São Luís"/"Sao Luis", sufixos "(1)") mapeadas para 27 nomes canônicos e suas siglas de UF.
@@ -129,13 +133,13 @@ Sim. A licença CC-BY permite uso acadêmico desde que se atribua a fonte ao TSE
 `LEFT JOIN` da base DIEESE com a série IPCA pela chave `mes` (com validação `many_to_one` — cada mês é único na série IPCA).
 
 **Tratamento dos registros sem correspondência:**  
-Nenhum registro da base DIEESE ficou sem IPCA (todos os meses de jan/2005 a jul/2026 existem na série IPCA tratada). A base é construída sobre os meses cobertos pelo DIEESE.
+Nenhum registro ficou sem IPCA, presidente ou governador de referência. O TSE não possui registro presidencial de 2006 na tabela derivada; por isso, 2006–2009 usa o último presidente disponível (2002), enquanto os governadores usam a eleição de 2006.
 
 ---
 
 ## A.3 Dicionário de variáveis
 
-Variáveis da base tratada (24 colunas de `base_integrada`):
+Variáveis da base tratada (35 colunas de `base_integrada`):
 
 | Variável | Tipo | Descrição | Unidade |
 |---|---|---|---|
@@ -163,6 +167,17 @@ Variáveis da base tratada (24 colunas de `base_integrada`):
 | `ipca_variavel` | categórica | Variável do IPCA (`IPCA - Variação mensal`) | não se aplica |
 | `ipca_var_mensal_pct` | numérica contínua | Variação mensal (%) do IPCA do grupo Alimentação e bebidas | % |
 | `ipca_tabela_sidra` | numérica discreta | Tabela SIDRA de origem do valor de IPCA (55/655/2938/1419/7060) | nº da tabela |
+| `ano_eleitoral_referencia` | numérica discreta | Ano eleitoral geral mais recente disponível até o ano da observação | ano |
+| `ano_eleitoral_presidente_referencia` | numérica discreta | Ano eleitoral usado para o contexto presidencial | ano |
+| `ano_eleitoral_governador_referencia` | numérica discreta | Ano eleitoral usado para o contexto estadual | ano |
+| `tse_presidente_nm_candidato` | texto | Nome do presidente eleito de referência | não se aplica |
+| `tse_presidente_sg_partido` | categórica | Sigla do partido do presidente de referência | não se aplica |
+| `tse_presidente_nm_partido` | texto | Nome do partido do presidente de referência | não se aplica |
+| `tse_presidente_nm_coligacao` | texto | Coligação do presidente de referência | não se aplica |
+| `tse_governador_nm_candidato` | texto | Nome do governador eleito de referência para a UF | não se aplica |
+| `tse_governador_sg_partido` | categórica | Sigla do partido do governador de referência | não se aplica |
+| `tse_governador_nm_partido` | texto | Nome do partido do governador de referência | não se aplica |
+| `tse_governador_nm_coligacao` | texto | Coligação do governador de referência | não se aplica |
 
 Valores de `periodo_cobertura`:
 
@@ -181,10 +196,10 @@ Valores de `periodo_cobertura`:
 4757 (`base_integrada`; série IPCA tratada isolada: 392 meses).
 
 **Número final de colunas:**  
-24 (`base_integrada`); 6 (`ipca_alimentacao_tratada`); 20 (`cesta_basica_dieese_tratada`).
+35 (`base_integrada`); 6 (`ipca_alimentacao_tratada`); 20 (`cesta_basica_dieese_tratada`).
 
 **O que representa uma linha:**  
-Uma capital em um mês (observação capital × mês da pesquisa DIEESE), enriquecida com o IPCA nacional do grupo Alimentação e bebidas correspondente ao mesmo mês.
+Uma capital em um mês (observação capital × mês da pesquisa DIEESE), enriquecida com o IPCA nacional e com o presidente e governador de referência segundo o ano e a UF.
 
 **Cobertura temporal:**  
 jan/2005 a jul/2026 (base integrada). A série IPCA tratada cobre jan/1994 a ago/2026.
@@ -210,7 +225,7 @@ Boletins mensais da Pesquisa Nacional da Cesta Básica (DIEESE) e série mensal 
 - `var_ano` ausente em **829** linhas, `var_12` em **451**, `var_mensal` em **41** (os boletins nem sempre publicam todos os indicadores).
 - **2025-05 e 2025-06**: o DIEESE publicou apenas 17 capitais; a captura resultou em 14 (faltam Rio de Janeiro, Belo Horizonte e Campo Grande, presentes nos PDFs desses meses — o parser posicional não os reconheceu). **28 linhas** nesses meses.
 - **Capitais do Norte/Nordeste** só entram a partir de 2016-01 (ponderação atualizada do DIEESE).
-- A **fonte TSE** não está integrada nesta base (fica para a etapa de análise, via `ano`/`sigla_partido`).
+- A **fonte TSE** é preservada em tabela derivada e também integrada à base mensal por ano eleitoral de referência, UF, cargo e partido.
 
 ### Decisões de limpeza relevantes
 
@@ -238,6 +253,7 @@ Tratamento **estrutural apenas** (sem alteração de valores):
 - Medição de cobertura (`n_capitais_no_mes`) e rotulagem por fase de metodologia (`periodo_cobertura`).
 - Cruzamento de uma amostra dos valores capturados (`var_mensal`, `valor`, `tempo`) com os PDFs originais do DIEESE (meses 200512, 200712, 201309, 201601, 202505–07), confirmando as anomalias descritas em A.5.
 - Validação do join: 0 linhas sem IPCA na base integrada; valores de IPCA coincidentes nas sobreposições das cinco tabelas SIDRA.
+- Validação da integração TSE: 4.757 linhas preservadas, 0 linhas sem presidente ou governador de referência e cardinalidade final capital × mês mantida.
 
 ---
 
@@ -282,11 +298,12 @@ Caminhos relativos à pasta `projeto/documentacao/`.
 |---|---|---|
 | Notebook/scripts de coleta IBGE (API) | `../../notebook_ipca_alimentacao_1994_2026.py` | OK |
 | Notebook/scripts de coleta DIEESE (scraping) | `../../Dados do DIEESE/coletaDados.ipynb` (+ `coletaDeDados.py`, `limpezaHTML.py`, `limpezaPDF.py`, `especifico201001html.py`) | OK |
-| Notebook de coleta consolidado | `../../notebook_coleta.ipynb` | A consolidar (rascunho) |
+| Notebook de coleta consolidado | `../notebook_coleta.ipynb` | OK |
 | Dados brutos da API (IBGE/SIDRA) | `../dados_brutos/sidra_t{58,655,2938,1419,7060}_alimentacao_20260914_190056.json` | OK |
-| Dados brutos do scraping (DIEESE) | `../../dados_brutos/dieese/*.pdf` (260), `../../dados_brutos/dieese/provenance_log.csv`, `../../Dados do DIEESE/dados_Coletados.csv` | OK |
-| Dados brutos da API (TSE/Dados Abertos) | `../dados_brutos/tse/*.zip` | Pendente (não presente) |
-| Base tratada | `../dados_tratados/base_integrada.{parquet,csv}` (+ `cesta_basica_dieese_tratada.*`, `ipca_alimentacao_tratada.*`, `log_duplicatas_removidas.csv`) | OK |
+| Dados brutos do scraping (DIEESE) | `../../dados_brutos/dieese/*.pdf` (260), `../../dados_brutos/dieese/provenance_log.csv` | OK |
+| Dados brutos da API (TSE/Dados Abertos) | `../dados_brutos/tse/*.zip` (255 arquivos) | OK |
+| Base derivada TSE | `../dados_tratados/tse_derivada_presidentes_governadores.csv/.parquet` | OK |
+| Base tratada e integrada | `../dados_tratados/base_integrada.{parquet,csv}` (35 colunas, incluindo TSE) | OK |
 | Tratamento/integração (código) | `../../notebook_tratamento_base_integrada.py` | OK |
 | Registro de proveniência | `proveniencia.csv` | OK |
 | Dataset card | `dataset_card.md` | OK |

@@ -622,75 +622,83 @@ Nunca inclua tokens, senhas ou chaves privadas no pacote entregue.
 
 ---
 
-## 18. Checklist do notebook
+## 18. Checklist do notebook — atualizado em 19/09/2026
 
-- [ ] O notebook possui título, integrantes e objetivo.
-- [ ] A pergunta motivadora está descrita.
-- [ ] As bibliotecas e dependências estão identificadas.
-- [ ] A coleta via API está implementada.
-- [ ] A coleta via HTML está implementada.
-- [ ] Os dados brutos são salvos antes da limpeza.
-- [ ] URLs, parâmetros e seletores estão registrados.
-- [ ] Erros e status HTTP são tratados.
-- [ ] A chave de integração está explicada.
-- [ ] O join e seus resultados são verificados.
-- [ ] As decisões de limpeza estão comentadas.
-- [ ] A base tratada é exportada.
+- [x] O notebook possui título, objetivo e descrição das fontes. **Pendente:** preencher os integrantes.
+- [x] A pergunta motivadora está descrita.
+- [x] As bibliotecas e dependências estão identificadas.
+- [x] A coleta via API está implementada.
+- [x] A coleta via HTML está implementada.
+- [x] Os dados brutos são salvos antes da limpeza.
+- [x] URLs, parâmetros e seletores estão registrados.
+- [x] Erros e status HTTP são tratados.
+- [x] A chave de integração está explicada.
+- [x] O join e seus resultados são verificados.
+- [x] As decisões de limpeza estão comentadas.
+- [x] A base tratada é exportada.
 - [ ] O notebook foi executado do início ao fim em um kernel reiniciado.
-- [ ] Não existem células dependentes de execução manual não documentada.
-- [ ] As saídas finais mostram dimensões e verificações básicas.
+- [ ] Não existem células dependentes de execução manual não documentada. **Validar durante a execução limpa.**
+- [x] As saídas finais mostram dimensões e verificações básicas.
 
 ---
 
-## 19. Checklist do dataset card e da proveniência
+## 19. Checklist do dataset card e da proveniência — atualizado em 19/09/2026
 
-- [ ] O nome da base é claro.
-- [ ] Todos os integrantes estão listados.
-- [ ] O tema e a pergunta motivadora estão descritos.
-- [ ] O período da coleta está informado.
-- [ ] Todas as fontes possuem URL exata.
-- [ ] O método de cada fonte está descrito.
-- [ ] Endpoint, parâmetros ou seletores foram registrados.
-- [ ] Licenças e termos de uso foram registrados.
-- [ ] A chave de integração está explicada.
-- [ ] O tratamento das divergências foi descrito.
-- [ ] O dicionário contém uma linha por coluna tratada.
-- [ ] Os tipos e unidades estão informados.
-- [ ] O número final de linhas e colunas está correto.
-- [ ] A unidade de observação está clara.
-- [ ] A cobertura está descrita.
-- [ ] Dados descartados e limitações estão documentados.
-- [ ] Valores faltantes e vieses conhecidos estão documentados.
-- [ ] As decisões de limpeza relevantes estão documentadas.
-- [ ] A presença ou ausência de dados pessoais foi declarada.
-- [ ] Restrições de uso e redistribuição estão descritas.
-- [ ] A verificação do `robots.txt` está registrada.
-- [ ] A proveniência informa onde, quando e como cada fonte foi coletada.
+- [x] O nome da base é claro.
+- [ ] Todos os integrantes estão listados. **Pendente:** substituir `Nome 1` a `Nome 4` pelos nomes reais.
+- [x] O tema e a pergunta motivadora estão descritos.
+- [x] O período da coleta está informado.
+- [x] Todas as fontes possuem URL exata.
+- [x] O método de cada fonte está descrito.
+- [x] Endpoint, parâmetros ou seletores foram registrados.
+- [x] Licenças e termos de uso foram registrados.
+- [x] A chave de integração está explicada.
+- [x] O tratamento das divergências foi descrito.
+- [x] O dicionário contém uma linha por coluna tratada.
+- [x] Os tipos e unidades estão informados.
+- [x] O número final de linhas e colunas está correto: 4.757 × 35.
+- [x] A unidade de observação está clara: capital × mês.
+- [x] A cobertura está descrita.
+- [x] Dados descartados e limitações estão documentados.
+- [x] Valores faltantes e vieses conhecidos estão documentados.
+- [x] As decisões de limpeza relevantes estão documentadas.
+- [x] A presença ou ausência de dados pessoais foi declarada.
+- [x] Restrições de uso e redistribuição estão descritas.
+- [x] A verificação do `robots.txt` está registrada.
+- [x] A proveniência informa onde, quando e como cada fonte foi coletada.
 
 ---
 
-## 20. Checklist final antes da entrega
+## 20. Checklist final antes da entrega — atualizado em 19/09/2026
 
-- [ ] O pacote contém pelo menos duas fontes realmente distintas.  <!-- Este projeto utiliza três fontes -->
-- [ ] Uma fonte foi obtida via API.  <!-- IBGE/SIDRA e TSE/Dados Abertos -->
-- [ ] Uma fonte foi obtida via scraping de HTML.  <!-- DIEESE -->
-- [ ] As fontes estão integradas em uma base única.  <!-- 3 fontes integradas por ano e sigla_partido -->
-- [ ] O join usa uma chave explicada e validada.
-- [ ] Os arquivos brutos estão presentes e intactos.
-- [ ] A base tratada está separada do bruto.
-- [ ] O notebook é reprodutível.
-- [ ] O notebook trata erros e status HTTP.
-- [ ] A coleta respeita pausas e limitações do servidor.
-- [ ] O `robots.txt` foi verificado e documentado.
-- [ ] Licenças e termos de uso foram analisados.
-- [ ] Dados pessoais foram evitados, minimizados ou anonimizados.
-- [ ] O registro de proveniência está completo.
-- [ ] O dataset card está completo e consistente com o notebook.
+- [x] O pacote contém pelo menos duas fontes realmente distintas. <!-- Este projeto utiliza três fontes -->
+- [x] Uma fonte foi obtida via API. <!-- IBGE/SIDRA e TSE/Dados Abertos -->
+- [x] Uma fonte foi obtida via scraping de HTML. <!-- DIEESE -->
+- [x] As fontes estão integradas em uma base única. <!-- 4.757 linhas e 35 colunas -->
+- [x] O join usa uma chave explicada e validada.
+- [x] Os arquivos brutos estão presentes e intactos.
+- [x] A base tratada está separada do bruto.
+- [ ] O notebook é reprodutível. **Executar todas as células em kernel reiniciado.**
+- [x] O notebook trata erros e status HTTP.
+- [x] A coleta respeita pausas e limitações do servidor.
+- [x] O `robots.txt` foi verificado e documentado.
+- [x] Licenças e termos de uso foram analisados.
+- [x] Dados pessoais foram evitados, minimizados ou anonimizados.
+- [x] O registro de proveniência está completo.
+- [x] O dataset card está completo e consistente com a base gerada.
 - [ ] O volume foi conferido com o professor, quando necessário.
-- [ ] O pacote não contém senhas, tokens ou chaves privadas.
-- [ ] Todos os caminhos e instruções do README foram testados.
+- [x] O pacote não contém senhas, tokens ou chaves privadas.
+- [ ] Todos os caminhos e instruções do README foram testados após a reorganização final.
 - [ ] O arquivo final pode ser aberto e executado em um ambiente limpo.
 - [ ] A entrega segue o prazo e o formato definidos pelo professor.
+
+### Pendências objetivas
+
+1. Substituir os nomes fictícios dos integrantes no [README](../projeto/README.md) e no dataset card.
+2. Abrir `projeto/notebook_coleta.ipynb`, reiniciar o kernel e executar todas as células em ordem.
+3. Conferir as saídas finais do notebook: dimensões, chaves, duplicatas, valores ausentes e arquivos exportados.
+4. Testar a abertura do pacote em um ambiente limpo e confirmar o formato exigido pelo professor, indicado como ColabWeb.
+5. Depois dessas verificações, revisar o `git status`, criar o commit final e enviar para o repositório remoto.
 
 **Prazo indicado no PDF:** 10/09/2026.  
 **Forma de entrega indicada no PDF:** ColabWeb.
